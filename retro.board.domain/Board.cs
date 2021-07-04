@@ -29,45 +29,84 @@ namespace retro.board.domain
             Zones = zones;
         }
 
+        public bool ZoneExists(Zone zone) => Zones.Any(z => z.Name == zone.Name);
+
         public void AddZone(Zone zone)
         {
-            if (Zones.Any(z => z.Name == zone.Name))
+            if (ZoneExists(zone))
                 throw new BusinessException($"Nie możesz utworzyć obszaru o nazwie {zone.Name.Value}, ponieważ taki obszar istnieje.");
 
             Zones.Add(zone);
         }
 
-        public void AddCard(ZoneName name, StickyCard card) 
+        public void ChangeZoneName(Zone zone, ZoneName newZoneName)
         {
-            var zone = Zones.FirstOrDefault(x => x.Name == name);
-            if (zone == null)
-                throw new BusinessException($"Wybrany obszar o nazwie {name.Value}, nie istnieje.");
-
-            zone.AddCard(card);
+            if (zone.Name != newZoneName)
+            {
+                var newZone = zone.Update(newZoneName);
+                AddZone(newZone);
+                RemoveZone(zone.Name);
+            }
         }
 
-        public void RemoveCard(CardId cardId, IBoardWithCards boardWithCards) 
+        public void RemoveZone(ZoneName zoneName)
         {
-            var cards = Zones.Select(x => x.Cards).ToList();
-            if (cards == null || !cards.Any())
-                throw new BusinessException("Tablica nie zawiera kartek!");
+            var zone = FindZone(zoneName);
+            Zones.Remove(zone);
+        }
 
-            var card = cards.FirstOrDefault(x => x.Id == cardId);
+        public void AddCard(ZoneName zoneName, StickyCard card, IBoardWithCards boardWithCards)
+        {
+            var zone = FindZone(zoneName);
+            zone.AddCard(card, Id, boardWithCards);
+        }
 
-            if (card == null)
+        public void RemoveCard(StickyCard card, IBoardWithCards boardWithCards)
+        {
+            var originalCard = FindCard(card);
+            boardWithCards.RemoveCard(originalCard);
+        }
+
+        public void EditCard(StickyCard card, ZoneName name, IBoardWithCards boardWithCards)
+        {
+            var zone = FindZone(name);
+            zone.UpdateCard(card, Id, boardWithCards);
+        }
+
+        public void MoveCard(StickyCard card, ZoneName sourceZoneName, ZoneName destinationZoneName, IBoardWithCards boardWithCards)
+        {
+            var sourceZone = FindZone(sourceZoneName);
+            var destinationZone = FindZone(destinationZoneName);
+            boardWithCards.UpdateCard(card, destinationZone.Name, Id);
+        }
+
+        private StickyCard FindCard(StickyCard card)
+        {
+            if (Zones == null || !Zones.Any())
+                throw new BusinessException("Tablica nie ma zdefiniowanych obszarów!");
+
+            StickyCard originalCard = null;
+
+            foreach(var zone in Zones)
+            {
+                originalCard = zone.Cards.Where(x => x.Id == card.Id).FirstOrDefault();
+                if (originalCard != null)
+                    break;
+            }
+
+            if (originalCard == null)
                 throw new BusinessException("Podana kartka nie istnieje!");
 
-            boardWithCards.RemoveCard(card);
+            return originalCard;
         }
 
-        public void RemoveZone()
+        private Zone FindZone(ZoneName zoneName)
         {
+            var zone = Zones.FirstOrDefault(x => x.Name == zoneName);
+            if (zone == null)
+                throw new BusinessException($"Wybrany obszar o nazwie {zoneName.Value}, nie istnieje.");
 
-        }
-
-        public void EditCard()
-        {
-
+            return zone;
         }
     }
 }
