@@ -63,6 +63,13 @@ namespace retro.board.fe
 
             app.UseRouting();
 
+            app.UseCors(x => 
+                            {
+                                x.AllowAnyOrigin();
+                                x.AllowAnyHeader();
+                            }
+                        );
+
             app.UseAuthentication();
             app.UseAuthorization();
 
