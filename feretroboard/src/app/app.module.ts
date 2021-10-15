@@ -9,8 +9,15 @@ import { LoginComponent } from './unauthorized/login/login.component';
 import { MainComponent } from './authorized/main/main.component';
 
 import { Observable, throwError } from 'rxjs';
+import { AuthService } from './services/auth.service';
+import { AuthGuardService } from './services/auth-guard.service';
+import { JwtModule } from '@auth0/angular-jwt';
+import { LoginService } from './services/login.service';
 //import { catchError, retry } from 'rxjs/operators';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,9 +29,12 @@ import { Observable, throwError } from 'rxjs';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+    JwtModule.forRoot({ config: { tokenGetter: tokenGetter }}),
     //Observable
   ],
-  providers: [],
+  providers: [ AuthService, AuthGuardService, LoginService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+

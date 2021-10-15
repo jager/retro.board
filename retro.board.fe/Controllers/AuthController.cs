@@ -26,7 +26,7 @@ namespace retro.board.be.Controllers
             if (token == null)
                 return Unauthorized();
             
-            return Ok(token);
+            return Ok(new { @token = token });
         }
     }
 }

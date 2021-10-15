@@ -1,21 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AdminUser } from '../models/AdminUser';
+import { AuthService } from './auth.service';
 import { BaseService } from './base.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class LoginService extends BaseService {
 
-  constructor(http: HttpClient) {
-    super(http);
+  constructor(http: HttpClient, authService:AuthService) {
+    super(http, authService);
   }
 
   authenticate(username:string, password:string):any {
-    return this.getClient().post(this.baseUrl + `/auth/signin`, {
+    return this.post(this.baseUrl + `/auth/signin`, {
       Username: username,
       Password: password
     });
+  }
+
+  signOut() {
+    return this.get(this.baseUrl + `/auth/signOut`);
   }
 }
