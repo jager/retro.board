@@ -28,8 +28,9 @@
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.css",
-              "src/assets/lte-template/dist/css/adminlte.css"
+              "src/assets/lte-template/plugins/fontawesome-free/css/all.css",
+              "src/assets/lte-template/dist/css/adminlte.css",
+              "src/styles.css"
             ],
             "scripts": [
               "src/assets/lte-template/plugins/jquery/jquery.min.js",

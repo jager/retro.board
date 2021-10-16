@@ -7,12 +7,14 @@
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
+      <!--
       <li class="nav-item d-none d-sm-inline-block">
         <a href="/" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li>
+    -->
     </ul>
 
     <!-- Right navbar links -->
@@ -29,6 +31,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
+      &nbsp;&nbsp;<i class="nav-icon fas fa-jedi"></i>&nbsp;&nbsp;
       <span class="brand-text font-weight-light" [innerHtml]="appName"></span>
     </a>
 
@@ -37,7 +40,7 @@
       <!-- Sidebar user (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img [src]="avatarLink" class="img-circle elevation-2" alt="User Image">
+          <img [src]="avatarLink" class="img-circle elevation-2" [alt]="loggedInUser">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{loggedInUser}}</a>
@@ -51,10 +54,9 @@
                with font-awesome or any other icon font library -->
           <li class="nav-item">
             <a routerLink="users" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
                 Użytkownicy
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
           </li>
@@ -68,6 +70,7 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
+    <!--
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
@@ -81,36 +84,15 @@
             </ol>
           </div>
         </div>
-      </div><!-- /.container-fluid -->
+      </div><!-- /.container-fluid
     </section>
+    -->
 
     <!-- Main content -->
     <section class="content">
       <router-outlet></router-outlet>
       <!-- Default box -->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Title</h3>
 
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-              <i class="fas fa-minus"></i>
-            </button>
-            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        <div class="card-body">
-          Start creating your amazing application!
-        </div>
-        <!-- /.card-body -->
-        <div class="card-footer">
-          Footer
-        </div>
-        <!-- /.card-footer-->
-      </div>
-      <!-- /.card -->
 
     </section>
     <!-- /.content -->
