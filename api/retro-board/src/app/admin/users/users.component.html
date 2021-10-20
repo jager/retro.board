@@ -16,6 +16,7 @@
             <tr>
               <th>ID</th>
               <th>Login</th>
+              <th>Adres mailowy</th>
               <th>Imię i nazwisko</th>
               <th>Rola</th>
             </tr>
@@ -24,6 +25,7 @@
             <tr *ngFor="let master of scrumMasters" (click)="selectUser(master)">
               <td>{{master.id}}</td>
               <td>{{master.login}}</td>
+              <td>{{master.email}}</td>
               <td>{{master.name}}</td>
               <td>{{master.role.name}}</td>
 
@@ -96,7 +98,8 @@
               <th>ID</th>
               <th>Nazwa boarda</th>
               <th colspan="2">Okres aktywności</th>
-              <th>Token</th>
+              <th>Status</th>
+              <th></th>
             </tr>
           </thead>
           <tfoot *ngIf="selectedTeam != null">
@@ -104,7 +107,7 @@
               <td colspan="2"><input type="text" class="form-control" placeholder="Nowy board" [(ngModel)]="newBoardName" name="newBoardName" /></td>
               <td><input type="text" class="form-control" placeholder="Od" [(ngModel)]="newBoardActiveFrom" name="newBoardActiveFrom" /></td>
               <td><input type="text" class="form-control" placeholder="Do" [(ngModel)]="newBoardActiveTo" name="newBoardActiveTo" /></td>
-              <td><button type="button" class="btn btn-success btn-small" (click)="addNewBoard(newBoardName, newBoardActiveFrom, newBoardActiveTo)">Dodaj board</button></td>
+              <td colspan="2"><button type="button" class="btn btn-success btn-small" (click)="addNewBoard(newBoardName, newBoardActiveFrom, newBoardActiveTo)">Dodaj board</button></td>
             </tr>
           </tfoot>
           <tbody *ngIf="selectedTeam != null && selectedTeam.boards.length > 0">
@@ -114,13 +117,21 @@
               <td>{{board.name}}</td>
               <td>{{board.activeFrom}}</td>
               <td>{{board.activeTo}}</td>
-              <td>{{board.token}}</td>
+              <td style="text-align:center">
+                <span *ngIf="board.active" class="badge bg-success"><fa-icon [icon]="checkIcon"></fa-icon></span>
+                <span *ngIf="!board.active" class="badge bg-danger"><fa-icon [icon]="lockIcon"></fa-icon></span>
+              </td>
+              <td>
+                <a class="btn"><fa-icon [icon]="copyIcon"></fa-icon></a>
+                <a class="btn"><fa-icon [icon]="linkIcon"></fa-icon></a>
+              </td>
+
             </tr>
 
           </tbody>
           <tbody *ngIf="selectedTeam == null || selectedTeam.boards.length == 0">
             <tr>
-              <td colspan="4">Brak boardów do wyświetlenia.</td>
+              <td colspan="6">Brak boardów do wyświetlenia.</td>
             </tr>
           </tbody>
         </table>

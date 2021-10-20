@@ -4,6 +4,7 @@ import { Board } from '../models/Board';
 import { ScrumMaster } from '../models/ScrumMaster';
 import { Team } from '../models/Team';
 import { UserManagementService } from '../services/user-management.service';
+import { faLink, faCopy, faCheck, faLock } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-users',
@@ -20,6 +21,11 @@ export class UsersComponent implements OnInit {
   newBoardName:string = ""
   newBoardActiveTo:string = ""
   newBoardActiveFrom:string = ""
+
+  linkIcon = faLink;
+  copyIcon = faCopy;
+  checkIcon = faCheck
+  lockIcon = faLock;
 
   constructor(private userManagement: UserManagementService)
   {

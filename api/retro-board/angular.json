@@ -34,7 +34,8 @@
             ],
             "scripts": [
               "src/assets/lte-template/plugins/jquery/jquery.min.js",
-              "src/assets/lte-template/dist/js/adminlte.js"
+              "src/assets/lte-template/dist/js/adminlte.js",
+              "node_modules/angular-md5/angular-md5.min.js"
             ]
           },
           "configurations": {
@@ -104,7 +105,8 @@
               "src/assets/lte-template/dist/css/adminlte.min.css"
             ],
             "scripts": [
-              "src/assets/lte-template/dist/js/adminlte.min.js"
+              "src/assets/lte-template/dist/js/adminlte.min.js",
+              "node_modules/angular-md5/angular-md5.min.js"
             ]
           }
         }

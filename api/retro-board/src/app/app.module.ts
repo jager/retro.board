@@ -36,8 +36,7 @@ export function tokenGetter() {
     NgbModule,
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter }}),
     FormsModule,
-    FontAwesomeModule,
-    
+    FontAwesomeModule
   ],
   providers: [AuthService, AuthGuardService, LoginService, LayoutService],
   bootstrap: [AppComponent]
