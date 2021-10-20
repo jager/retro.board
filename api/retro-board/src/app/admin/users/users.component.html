@@ -21,6 +21,13 @@
             </tr>
           </thead>
           <tbody>
+            <tr *ngFor="let master of scrumMasters" (click)="selectUser(master)">
+              <td>{{master.id}}</td>
+              <td>{{master.login}}</td>
+              <td>{{master.name}}</td>
+              <td>{{master.role.name}}</td>
+
+            </tr>
           </tbody>
         </table>
       </div>
@@ -29,7 +36,7 @@
     <!-- /.card -->
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="selectedUser != null">
   <div class="col-md-3">
     <div class="card">
       <div class="card-header">
@@ -45,20 +52,27 @@
         <div class="text-center">
           <img class="profile-user-img img-fluid img-circle"
                [src]="avatarLink"
-               [alt]="userName" />
+               [alt]="selectedUser.name" />
         </div>
 
-        <h3 class="profile-username text-center">Aleksandra Niewiadomska</h3>
+        <h3 class="profile-username text-center">{{selectedUser.name}}</h3>
 
-        <p class="text-muted text-center">Scrum Master</p>
+        <p class="text-muted text-center">{{selectedUser.role.name}}</p>
 
-        <ul class="list-group list-group-unbordered mb-3">
-          <li class="list-group-item">
-            <b>Sprintersi (Z23)</b> <a class="float-right">4</a>
+        <ul class="list-group list-group-unbordered mb-3" *ngIf="selectedUser.teams.length > 0">
+          <li class="list-group-item usersTeamInList" *ngFor="let team of selectedUser.teams" (click)="selectTeam(team)">
+            <b>{{team.name}}</b> <a class="float-right badge bg-info">{{team.boards.length}}</a>
           </li>
         </ul>
 
-        <a href="#" class="btn btn-warning btn-small"><b>Edytuj</b></a>
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" placeholder="Nowy zespół" [(ngModel)]="newTeamName" name="newTeamName">
+          <span class="input-group-append">
+            <button type="button" class="btn btn-success btn-flat" (click)="addNewTeam(newTeamName)">Dodaj zespół</button>
+          </span>
+        </div>
+
+
       </div>
       <!-- /.card-body -->
     </div>
@@ -67,7 +81,7 @@
   <div class="col-md-9">
     <div class="card">
       <div class="card-header">
-        <h3 class="card-title">Tablice</h3>
+        <h3 class="card-title">{{selectedTeam != null ? selectedTeam.name : "Wybierz zespół"}}</h3>
 
         <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -76,7 +90,40 @@
         </div>
       </div>
       <div class="card-body">
-        Start creating your amazing application!
+        <table class="table table-hover text-nowrap">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nazwa boarda</th>
+              <th colspan="2">Okres aktywności</th>
+              <th>Token</th>
+            </tr>
+          </thead>
+          <tfoot *ngIf="selectedTeam != null">
+            <tr>
+              <td colspan="2"><input type="text" class="form-control" placeholder="Nowy board" [(ngModel)]="newBoardName" name="newBoardName" /></td>
+              <td><input type="text" class="form-control" placeholder="Od" [(ngModel)]="newBoardActiveFrom" name="newBoardActiveFrom" /></td>
+              <td><input type="text" class="form-control" placeholder="Do" [(ngModel)]="newBoardActiveTo" name="newBoardActiveTo" /></td>
+              <td><button type="button" class="btn btn-success btn-small" (click)="addNewBoard(newBoardName, newBoardActiveFrom, newBoardActiveTo)">Dodaj board</button></td>
+            </tr>
+          </tfoot>
+          <tbody *ngIf="selectedTeam != null && selectedTeam.boards.length > 0">
+            <tr *ngFor="let board of selectedTeam.boards">
+              <td *ngIf="board.id > 0">{{board.id}}</td>
+              <td *ngIf="board.id <= 0"><span class="badge bg-danger">Nowy</span></td>
+              <td>{{board.name}}</td>
+              <td>{{board.activeFrom}}</td>
+              <td>{{board.activeTo}}</td>
+              <td>{{board.token}}</td>
+            </tr>
+
+          </tbody>
+          <tbody *ngIf="selectedTeam == null || selectedTeam.boards.length == 0">
+            <tr>
+              <td colspan="4">Brak boardów do wyświetlenia.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <!-- /.card-body -->
     </div>

@@ -37,6 +37,7 @@ export function tokenGetter() {
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter }}),
     FormsModule,
     FontAwesomeModule,
+    
   ],
   providers: [AuthService, AuthGuardService, LoginService, LayoutService],
   bootstrap: [AppComponent]
