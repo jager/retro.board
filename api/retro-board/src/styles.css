@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+li.usersTeamInList {
+  cursor: pointer;
+}
+li.usersTeamInList:hover {background-color: #fbfbfb;}
+.table-hover tbody tr:hover {
+  color: #212529;
+  background-color: #fbfbfb;
+  cursor: pointer;
+}

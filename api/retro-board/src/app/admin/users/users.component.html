@@ -1,1 +1,143 @@
-<p>users works!</p>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Użytkownicy</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover text-nowrap">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Login</th>
+              <th>Adres mailowy</th>
+              <th>Imię i nazwisko</th>
+              <th>Rola</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let master of scrumMasters" (click)="selectUser(master)">
+              <td>{{master.id}}</td>
+              <td>{{master.login}}</td>
+              <td>{{master.email}}</td>
+              <td>{{master.name}}</td>
+              <td>{{master.role.name}}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
+<div class="row" *ngIf="selectedUser != null">
+  <div class="col-md-3">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Wybrany użytkownik</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="text-center">
+          <img class="profile-user-img img-fluid img-circle"
+               [src]="avatarLink"
+               [alt]="selectedUser.name" />
+        </div>
+
+        <h3 class="profile-username text-center">{{selectedUser.name}}</h3>
+
+        <p class="text-muted text-center">{{selectedUser.role.name}}</p>
+
+        <ul class="list-group list-group-unbordered mb-3" *ngIf="selectedUser.teams.length > 0">
+          <li class="list-group-item usersTeamInList" *ngFor="let team of selectedUser.teams" (click)="selectTeam(team)">
+            <b>{{team.name}}</b> <a class="float-right badge bg-info">{{team.boards.length}}</a>
+          </li>
+        </ul>
+
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control" placeholder="Nowy zespół" [(ngModel)]="newTeamName" name="newTeamName">
+          <span class="input-group-append">
+            <button type="button" class="btn btn-success btn-flat" (click)="addNewTeam(newTeamName)">Dodaj zespół</button>
+          </span>
+        </div>
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">{{selectedTeam != null ? selectedTeam.name : "Wybierz zespół"}}</h3>
+
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-hover text-nowrap">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nazwa boarda</th>
+              <th colspan="2">Okres aktywności</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tfoot *ngIf="selectedTeam != null">
+            <tr>
+              <td colspan="2"><input type="text" class="form-control" placeholder="Nowy board" [(ngModel)]="newBoardName" name="newBoardName" /></td>
+              <td><input type="text" class="form-control" placeholder="Od" [(ngModel)]="newBoardActiveFrom" name="newBoardActiveFrom" /></td>
+              <td><input type="text" class="form-control" placeholder="Do" [(ngModel)]="newBoardActiveTo" name="newBoardActiveTo" /></td>
+              <td colspan="2"><button type="button" class="btn btn-success btn-small" (click)="addNewBoard(newBoardName, newBoardActiveFrom, newBoardActiveTo)">Dodaj board</button></td>
+            </tr>
+          </tfoot>
+          <tbody *ngIf="selectedTeam != null && selectedTeam.boards.length > 0">
+            <tr *ngFor="let board of selectedTeam.boards">
+              <td *ngIf="board.id > 0">{{board.id}}</td>
+              <td *ngIf="board.id <= 0"><span class="badge bg-danger">Nowy</span></td>
+              <td>{{board.name}}</td>
+              <td>{{board.activeFrom}}</td>
+              <td>{{board.activeTo}}</td>
+              <td style="text-align:center">
+                <span *ngIf="board.active" class="badge bg-success"><fa-icon [icon]="checkIcon"></fa-icon></span>
+                <span *ngIf="!board.active" class="badge bg-danger"><fa-icon [icon]="lockIcon"></fa-icon></span>
+              </td>
+              <td>
+                <a class="btn"><fa-icon [icon]="copyIcon"></fa-icon></a>
+                <a class="btn"><fa-icon [icon]="linkIcon"></fa-icon></a>
+              </td>
+
+            </tr>
+
+          </tbody>
+          <tbody *ngIf="selectedTeam == null || selectedTeam.boards.length == 0">
+            <tr>
+              <td colspan="6">Brak boardów do wyświetlenia.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>
