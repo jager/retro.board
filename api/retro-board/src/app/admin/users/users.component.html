@@ -45,9 +45,17 @@
         <h3 class="card-title">Wybrany użytkownik</h3>
 
         <div class="card-tools">
+          <button type="button" class="btn btn-tool" title="Edytuj">
+            <fa-icon [icon]="penIcon"></fa-icon>
+          </button>
+          <button type="button" class="btn btn-tool" title="Usuń">
+            <fa-icon [icon]="trashIcon"></fa-icon>
+          </button>
+          <!--
           <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
             <i class="fas fa-minus"></i>
           </button>
+          -->
         </div>
       </div>
       <div class="card-body">
@@ -124,6 +132,9 @@
               <td>
                 <a class="btn"><fa-icon [icon]="copyIcon"></fa-icon></a>
                 <a class="btn"><fa-icon [icon]="linkIcon"></fa-icon></a>
+                <a class="btn"><fa-icon [icon]="penIcon"></fa-icon></a>
+                <a class="btn"><fa-icon [icon]="trashIcon"></fa-icon></a>
+
               </td>
 
             </tr>
