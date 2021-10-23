@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: "https://localhost:44317/api",
+  baseUrl: "https://localhost:5001/api",
   appName: "Retro Board",
   appHtmlName: "<b>Retro</b> Board",
   avatarLink: `https://eu.ui-avatars.com/api/?rounded=true&background=random&name=`,

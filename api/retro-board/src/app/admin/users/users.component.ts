@@ -16,11 +16,11 @@ export class UsersComponent implements OnInit {
   selectedUser!:ScrumMaster;
   selectedTeam!:Team | null;
   scrumMasters:ScrumMaster[] = []
-  avatarLink:string = "#"
   newTeamName:string = ""
   newBoardName:string = ""
-  newBoardActiveTo:string = ""
-  newBoardActiveFrom:string = ""
+  newBoardActiveTo:string =  new Date().toString()
+  newBoardActiveFrom:string = new Date().toString();
+  avatarLink:string = ""
 
   linkIcon = faLink;
   copyIcon = faCopy;
@@ -37,9 +37,15 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getAvatar(name: string) : string {
+    return (name)
+          ? environment.avatarLink + name.replace(' ', '+')
+          : "#"
+  }
+
   selectUser(user:ScrumMaster): void {
     this.selectedUser = user;
-    this.avatarLink = this.selectedUser != null ? environment.avatarLink + this.selectedUser.name.replace(' ', '+') : "#"
+    this.avatarLink = this.selectedUser != null ? this.getAvatar(this.selectedUser.name) : "#"
     this.selectedTeam = null;
   }
 

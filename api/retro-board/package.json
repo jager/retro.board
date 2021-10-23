@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "bootstrap": "^4.5.0",
     "rxjs": "~6.6.0",
+    "smooth-scrollbar": "^8.6.3",
     "ts-md5": "^1.2.9",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
