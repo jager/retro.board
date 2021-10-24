@@ -27,7 +27,7 @@
               "src/assets"
             ],
             "styles": [
-              
+
               "src/assets/soft-ui/css/nucleo-icons.css",
               "src/assets/soft-ui/css/nucleo-svg.css",
               "src/assets/soft-ui/css/soft-ui-dashboard.min.css",

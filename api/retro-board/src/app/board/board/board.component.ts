@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Board } from 'src/app/admin/models/Board';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-board',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
+  appName:string = environment.appHtmlName
+
+  retrospectionBoard!: Board;
+  lanesAmount: number = this.retrospectionBoard.lanes.length;
+
+
+
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

@@ -8,7 +8,8 @@ export const environment = {
   appName: "Retro Board",
   appHtmlName: "<b>Retro</b> Board",
   avatarLink: `https://eu.ui-avatars.com/api/?rounded=true&background=random&name=`,
-  boardUrl : "http://localhost:4200/board/"
+  boardUrl : "http://localhost:4200/board/",
+  maxLaneNumber : 4
 };
 
 /*
