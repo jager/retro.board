@@ -27,14 +27,17 @@ export class Board {
   }
 
   public addLane(lane: Lane) : void {
-    if (this.lanes.length < this.maxLaneNumber) {
+    if (this.lanes.length < this.maxLaneNumber)
       this.lanes.push(lane);
-    }
+
+    this.canAddLanes = this.lanes.length < this.maxLaneNumber
   }
 
   public removeLane(lane: Lane) : void {
     if (lane)
       this.lanes.splice(this.lanes.indexOf(lane), 1);
+
+    this.canAddLanes = this.lanes.length < this.maxLaneNumber
   }
 
   public moveSticker(sticker: Sticker, destinationLane: Lane) : void {
