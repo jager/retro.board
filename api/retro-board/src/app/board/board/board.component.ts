@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Board } from 'src/app/admin/models/Board';
 import { Lane, Sticker } from 'src/app/admin/models/Lane';
 import { environment } from 'src/environments/environment';
-import { faCheck, faMinus, faEllipsisV, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faMinus, faEllipsisV, faMinusCircle, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular }  from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
+
+
 export class BoardComponent implements OnInit {
 
   appName:string = environment.appHtmlName
@@ -17,11 +20,16 @@ export class BoardComponent implements OnInit {
   lanesAmount: number = this.retrospectionBoard ? this.retrospectionBoard.lanes.length : 0;
   canAddLanes: boolean = false;
   showLanes: boolean = true;
+  editedLane!: Lane | null;
+
 
   checkIcon = faCheck;
   removeStickerIcon = faMinus;
   menuIcon = faEllipsisV;
   removeLaneIcon = faMinusCircle;
+  heartIcon = faHeart;
+  heartRegular = faHeartRegular;
+
 
 
   constructor()
@@ -65,6 +73,25 @@ export class BoardComponent implements OnInit {
       this.retrospectionBoard.removeLane(lane);
       this.canAddLanes = this.retrospectionBoard && this.retrospectionBoard.canAddLanes;
     }
+  }
+
+  addLike(sticker: Sticker) {
+    if (sticker) {
+      this.retrospectionBoard.addLike(sticker);
+    }
+  }
+
+  editLaneTitleModeOn(lane: Lane) {
+    this.editedLane = lane;
+  }
+
+  editLaneTitleModeOff(lane: Lane, event: any) {
+    this.editedLane = null;
+    this.retrospectionBoard.updateLaneName(lane, event.target.value);
+  }
+
+  isCurrentLaneEdited(lane: Lane): boolean {
+    return this.editedLane != null && this.editedLane == lane;
   }
 
 }

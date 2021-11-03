@@ -57,7 +57,7 @@ export class Board {
     this.lanes[indexOfLane].addSticker(sticker);
   }
 
-  public removeStickerFromLane(sticker: Sticker) {
+  public removeStickerFromLane(sticker: Sticker) : void {
     let lane = this.findLaneBy(sticker);
     if (lane)
       lane.removeSticker(sticker);
@@ -65,5 +65,20 @@ export class Board {
 
   private findLaneBy(sticker: Sticker) : Lane {
     return this.lanes.filter(x => x.stickers.indexOf(sticker) !== -1)[0]
+  }
+
+  public addLike(sticker: Sticker) : void {
+    let lane = this.findLaneBy(sticker);
+    if (lane) {
+      lane.addLike(sticker);
+    }
+  }
+
+  public updateLaneName(lane: Lane, newName: string) : void {
+    let indexOfLane = this.lanes.indexOf(lane);
+    if (indexOfLane === -1)
+      return;
+    let currentLane = this.lanes[indexOfLane];
+    currentLane.updateName(newName);
   }
 }
