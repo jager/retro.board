@@ -4,6 +4,8 @@ import { Lane, Sticker } from 'src/app/admin/models/Lane';
 import { environment } from 'src/environments/environment';
 import { faCheck, faMinus, faEllipsisV, faMinusCircle, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartRegular }  from '@fortawesome/free-regular-svg-icons';
+import { BoardService } from '../services/board-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-board',
@@ -30,9 +32,11 @@ export class BoardComponent implements OnInit {
   heartIcon = faHeart;
   heartRegular = faHeartRegular;
 
+  private subscription!: Subscription
 
 
-  constructor()
+
+  constructor(private boardService: BoardService)
   {
   }
 
@@ -43,6 +47,15 @@ export class BoardComponent implements OnInit {
       new Lane("do zmian", []),
     ]
     this.retrospectionBoard = new Board(1, "retro test", "2021-10-28 10:00:00", "2021-10-28 10:00:00", "tokenizer", true, lanes);
+
+ /*
+    this.subscription = this.boardService.loadBoard().subscribe(result => {
+      console.log(result);
+     let board = result.data;
+      let lanes = board.lanes.filter(x => new Lane(x.name, []));
+      this.retrospectionBoard = new Board(board.id, board.name, board.activeFrom, board.activeTo, board.token, board.active []);
+    });*/
+
     this.canAddLanes = this.retrospectionBoard && this.retrospectionBoard.canAddLanes;
     this.showLanes = this.retrospectionBoard && this.retrospectionBoard.lanes.length > 0;
   }
