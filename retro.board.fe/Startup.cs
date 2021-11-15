@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using retro.board.be.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using retro.board.be.Model;
 
 namespace retro.board.fe
 {
@@ -29,8 +30,9 @@ namespace retro.board.fe
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             var key = "This method gets called by the runtime. Use this method to add services to the container.";
+            services.AddControllers();
+            
 
             services.AddAuthentication(x =>
             {
@@ -49,6 +51,9 @@ namespace retro.board.fe
                 };
              });
             services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
+
+            services.AddGraphQLServer()
+                    .AddQueryType<Query>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,12 +75,13 @@ namespace retro.board.fe
                             }
                         );
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                //endpoints.MapControllers();
+                endpoints.MapGraphQL();
             });
         }
     }
