@@ -12,6 +12,7 @@ namespace retro.board.be.gql
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddGraphQLServer()
                        .AddQueryType<Query>();
         }
@@ -23,7 +24,11 @@ namespace retro.board.be.gql
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(x => 
+                {
+                    x.AllowAnyOrigin();
+                    x.AllowAnyHeader();
+                });
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
