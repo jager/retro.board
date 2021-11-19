@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace retro.board.be.gql.Model
 {
@@ -51,5 +53,48 @@ namespace retro.board.be.gql.Model
                     }}
                 }
             };
+
+        public SprintReviewBoard LoadSprint() => ReadSprintBoardReport();
+
+
+        private SprintReviewBoard ReadSprintBoardReport()
+        {
+            var content = File.ReadAllText("../sprint_board_z23_927.json");
+            var jsonContent = JsonConvert.DeserializeObject<SprintReviewBoard>(content);
+            return jsonContent;
+        }
+    }
+
+    public class SprintReviewBoard
+    {
+        public Issue[] Issues { get; set; }
+    }
+
+    public class Issue
+    {
+        
+        public int Id { get; set; }
+        public string Key { get; set; }
+        public Fields Fields { get; set; }
+        
+    }
+
+    public class Fields
+    {
+        public IssueType IssueType { get; set; }
+        public NameValue Status { get; set; }
+        public string Description { get; set; }
+        public string Summary { get; set; }
+    }
+
+    public class NameValue
+    {
+        public string Name { get; set; }
+    }
+
+    public class IssueType
+    {
+        public string Name { get; set; }
+        public bool Subtask { get; set; }
     }
 }
