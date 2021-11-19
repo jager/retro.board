@@ -1,0 +1,135 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card mb-4">
+      <div class="card-header pb-0">
+        <h6 class="card-title">Sprint Review Board.</h6>
+
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <select class="form-control" #teamChooser (change)="chooseTeam(teamChooser.value)" placeholder="Departure">
+              <option>-- wybierz zespół --</option>
+              <option *ngFor="let team of teams" [value]="team.name" >{{team.name}}</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <select class="form-control" #sprintChooser (change)="chooseSprint(sprintChooser.value)" placeholder="Departure" [disabled]="chosenTeam == null">
+                <option>-- wybierz --</option>
+                <option value="currentBoard">Aktualny board zespołowy</option>
+                <option *ngFor="let sprint of sprints" [value]="sprint.name" >{{sprint.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-5"></div>
+        </div>
+
+        <div class="row" *ngIf="sprintReviewReport">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active fw-bold" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="stats" aria-selected="true">Statystyki</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link  fw-bolder" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Zadania w sprincie</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Wyzwania i plany</button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <google-chart [data]="sprintDataForChart" [type]="chartType" style="width: 100%;" [title]="chartTitle" [options]="chartOptions"></google-chart>
+              <div class="row">
+                <div class="col-md-2">
+                  <table class="table align-items-center justify-content-center mb-0">
+                    <thead>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><p class="text-sm font-weight-bold mb-0">Story Pointy</p></td>
+                        <td><p class="text-sm font-weight-bold mb-0">32/38</p></td>
+                        <td>
+                          <div class="d-flex align-items-center justify-content-center">
+                            <span class="me-2 text-xs font-weight-bold">60%</span>
+                            <div>
+                              <div class="progress">
+                                <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><p class="text-sm font-weight-bold mb-0">Testy jednostkowe</p></td>
+                        <td><p class="text-sm font-weight-bold mb-0">32</p></td>
+                        <td>
+                          <div class="d-flex align-items-center justify-content-center">
+                            <span class="me-2 text-xs font-weight-bold">100%</span>
+                            <div>
+                              <div class="progress">
+                                <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div class="col-md-12 py-4">
+                <ul class="list-group">
+                  <li *ngFor="let issue of sprintReviewReport.issues"  class="list-group-item">
+                    <span class="d-flex bd-highlight" [ngClass]="{'d-none': isCurrentIssueInEditMode(issue), 'd-block': !isCurrentIssueInEditMode(issue)}">
+                      <span (click)="editDescription(issue)" class="px-1 w-100 bd-highlight">{{issue.description}}</span>
+                      <a class="px-1 flex-shrink-1 bd-highlight" href="javascript:void(0)" (click)="removeIssue(issue)"><fa-icon class="text-danger" [icon]="removeIcon"></fa-icon></a>
+                    </span>
+                    <input type="text" class="form-control" id="exampleFormControlTextarea1" rows="1" value="{{issue.description}}"
+                              [ngClass]="{'d-none': !isCurrentIssueInEditMode(issue), 'd-block': isCurrentIssueInEditMode(issue)}"
+                              (keyup.enter)="editDescriptionModeOff(issue, $event)"
+                               (focusout)="editDescriptionModeOff(issue, $event)"
+                              />
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+              <div class="col-md-12 py-4">
+                <ul class="list-group">
+                  <li class="list-group-item">
+                    <input type="text" class="form-control" value="" placeholder="Dodaj wyzwania lub problemy w sprincie"
+                      (keyup.enter)="addChallangeOrProblem($event)"/>
+                  </li>
+                  <li *ngFor="let challange of sprintReviewReport.challanges"  class="list-group-item d-flex bd-highlight">
+                      <span class="px-1 w-100 bd-highlight">{{challange}}</span>
+                      <a class="px-1 flex-shrink-1 bd-highlight" href="javascript:void(0)" (click)="removeChallenge(challange)"><fa-icon class="text-danger" [icon]="removeIcon"></fa-icon></a>
+                    <!--
+                    <span (click)="editDescription(issue)"  [ngClass]="{'d-none': isCurrentIssueInEditMode(issue), 'd-block': !isCurrentIssueInEditMode(issue)}">{{issue.description}}</span>
+                    <input type="text" class="form-control" id="exampleFormControlTextarea1" rows="1" value="{{issue.description}}"
+                              [ngClass]="{'d-none': !isCurrentIssueInEditMode(issue), 'd-block': isCurrentIssueInEditMode(issue)}"
+                              (keyup.enter)="editDescriptionModeOff(issue, $event)"
+                               (focusout)="editDescriptionModeOff(issue, $event)"
+                              />
+                    -->
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>

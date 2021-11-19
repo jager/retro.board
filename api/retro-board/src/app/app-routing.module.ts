@@ -5,13 +5,15 @@ import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { BoardComponent } from './board/board/board.component';
 import { AuthGuardService as AuthGuard } from './admin/services/auth-guard.service';
 import { UsersComponent } from './admin/users/users.component';
+import { SprintReviewComponent } from './admin/sprint-review/sprint-review.component';
 
 
 
 const routes: Routes = [
   { path: '', component: DashboardComponent, canActivate: [AuthGuard],
     children: [
-      { path: "users", component: UsersComponent, canActivate: [AuthGuard]}
+      { path: "users", component: UsersComponent, canActivate: [AuthGuard]},
+      { path: "sprint-review-board", component: SprintReviewComponent, canActivate: [AuthGuard]}
     ]
   },
   { path: 'login', component: LoginComponent },

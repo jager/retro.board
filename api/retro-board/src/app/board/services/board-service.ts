@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApolloQueryResult } from '@apollo/client';
-import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { IBoard } from '../model/board.interface';
 
@@ -9,7 +7,7 @@ import { IBoard } from '../model/board.interface';
 })
 export class BoardService {
 
-  constructor(private apollo: Apollo) { }
+  constructor() { }
 
   public loadBoard() : any { //Observable<ApolloQueryResult<IBoard>> {
     return null;
