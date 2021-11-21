@@ -52,8 +52,6 @@ namespace retro.board.fe
              });
             services.AddSingleton<IJwtAuthenticationManager>(new JwtAuthenticationManager(key));
 
-            services.AddGraphQLServer()
-                    .AddQueryType<Query>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,8 +78,7 @@ namespace retro.board.fe
 
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllers();
-                endpoints.MapGraphQL();
+                endpoints.MapControllers();
             });
         }
     }

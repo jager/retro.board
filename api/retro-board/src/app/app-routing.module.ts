@@ -15,7 +15,7 @@ const routes: Routes = [
     ]
   },
   { path: 'login', component: LoginComponent },
-  { path: 'board', component: BoardComponent },
+  { path: 'board/:boardId', component: BoardComponent },
   { path: '**', redirectTo: '' }
 ];
 

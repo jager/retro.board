@@ -16,6 +16,9 @@ import { FormsModule } from '@angular/forms';
 import { LayoutService } from './common/services/layout.service';
 import { UsersComponent } from './admin/users/users.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { GraphQLModule } from './graphql.module';
+import { BoardFactory } from './board/model/board.factory';
+import { BoardService } from './board/services/board-service';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -36,9 +39,10 @@ export function tokenGetter() {
     NgbModule,
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter }}),
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    GraphQLModule
   ],
-  providers: [AuthService, AuthGuardService, LoginService, LayoutService],
+  providers: [AuthService, AuthGuardService, LoginService, LayoutService, BoardFactory, BoardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
