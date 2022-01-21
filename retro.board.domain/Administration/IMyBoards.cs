@@ -2,8 +2,8 @@
 {
     public interface IMyBoards
     {
-        Board LoadBoard(BoardId boardId);
-        Board[] FindBoardsByOwner(Member owner);
+        Board LoadBoard(BoardKey key);        
         void SaveBoard(Board board);
+        Board[] FindBy(string owner);
     }
 }

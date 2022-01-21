@@ -19,4 +19,6 @@ namespace retro.board.be.hub.Controllers
             await _hub.Clients.All.SendAsync("Notification", message);
         }
     }
+
+    public class Hubber : H
 }

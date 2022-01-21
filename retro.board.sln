@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29728.190
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "retro.board.domain", "retro.board.domain\retro.board.domain.csproj", "{B5C33E0E-BDE4-419E-8A42-CF392CC73C01}"
 EndProject
@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "retro.board.authentication.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "retro.board.be.gql", "retro.board.be.gql\retro.board.be.gql.csproj", "{5EE44603-5DC2-4DFA-8ACC-D2FA99781262}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "retro.board.be.hub", "retro.board.be.hub\retro.board.be.hub.csproj", "{A5DDA25D-9697-4EC8-BAB6-AC7DBCA36B2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "retro.board.be.hub", "retro.board.be.hub\retro.board.be.hub.csproj", "{A5DDA25D-9697-4EC8-BAB6-AC7DBCA36B2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
